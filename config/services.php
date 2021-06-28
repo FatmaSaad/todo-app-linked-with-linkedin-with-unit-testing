@@ -28,6 +28,11 @@ return [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+    ],'linkedin' => [
+        'client_id' =>  env('LinkedIn_CLIENT_ID'),
+        'client_secret' => env('LinkedIn_CLIENT_SECRET'),
+        'redirect' =>  env('LinkedIn_REDIRECT_URL'),
     ],
+    
 
 ];

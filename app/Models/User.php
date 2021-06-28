@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -40,4 +38,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function todos()
+    {
+        return $this->hasMany(Todo::class);
+    }
+
+    public function social()
+    {
+        return $this->hasMany(Social::class);
+    }
+
+    public function token($platform)
+    {
+        return $this->social()->where('platform', $platform)->first();
+    }
+
+    public function hasToken($platform) : bool
+    {
+        return $this->social()->where('platform', $platform)->exists();
+    }
 }

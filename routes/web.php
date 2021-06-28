@@ -1,18 +1,17 @@
 <?php
 
+use App\Http\Controllers\TodoController;
+use App\Http\Controllers\LinkedInConnectController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::namespace('App\Http\Controllers')->group(function () {
+    Auth::routes();
+});
 
-Route::get('/', function () {
-    return view('welcome');
+Route::redirect('/', 'todo');
+Route::middleware('auth')->group(function () {
+    Route::resource('/todo', TodoController::class);
+    Route::get('/connect/linkedIn', [LinkedInConnectController::class,'connect'])->name('connect.LinkedIn');
+    Route::get('/connect/linkedIn/callback', [LinkedInConnectController::class,'callback'])->name('connect.LinkedIn.callback');
 });
